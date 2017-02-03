@@ -1,0 +1,18 @@
+{
+   "background_page": "background.html",
+   "browser_action": {
+      "default_icon": "icon19.png",
+      "name": "Tab Dupectomy"
+   },
+   "description": "Removes duplicate tabs from the current window",
+   "icons": {
+      "128": "icon128.png",
+      "16": "icon16.png",
+      "48": "icon48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqJs7mgySJaKhVxDDkKe1hsJO0SXvPXatBwnFfZLD7EVEX+0U9YtTrZyVyp17JBNotfzTNhqDWem6yzmpMPNfuKLFVM90wQlgku3+8dZ+ReNGx/MHwEoIc6kr8lKSxbCWuhahNFDtACDXoKjfwlcA6tmBkZFcSaaT1kXpvPF6FNQIDAQAB",
+   "name": "Tab Dupectomy",
+   "permissions": [ "tabs" ],
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "0.9.5"
+}
