@@ -1,11 +1,21 @@
 
-chrome.browserAction.onClicked.addListener(closeDuplicateTabsInCurrentWindow);
-chrome.tabs.onUpdated.addListener(countDuplicateSiblings);
-chrome.tabs.onRemoved.addListener(countDuplicateSiblings);
+chrome.browserAction.onClicked.addListener(closeDuplicateTabsInAllWindows);
+chrome.tabs.onUpdated.addListener(countDuplicateSiblingsInAllWindows);
+chrome.tabs.onRemoved.addListener(countDuplicateSiblingsInAllWindows);
 
 function closeDuplicateTabsInCurrentWindow()
 {
    chrome.tabs.getAllInWindow(null, closeDuplicateTabs);
+}
+
+function closeDuplicateTabsInAllWindows()
+{
+	chrome.tabs.query({}, closeDuplicateTabs);
+}
+
+function countDuplicateSiblingsInAllWindows(tab)
+{
+	chrome.tabs.query({}, countDuplicateTabs);
 }
 
 function countDuplicateSiblings(tab)
@@ -23,7 +33,7 @@ function closeDuplicateTabs(tabs)
 function countDuplicateTabs(tabs)
 {
 	var counter = new Counter();
-	processDuplicates(tabs, counter)
+	processDuplicates(tabs, counter);
 	updateDisplay(new Display(counter));
 }
 
@@ -61,13 +71,14 @@ function DuplicateProcessor(implementation)
 
 	this.nonSelected = function(found, tab)
 	{
-		if (!found.selected)
+
+		if (!found.selected && !found.pinned)
 		{
 			this.cache.remember(tab);
 			return found;
 		}
 
-		if (!tab.selected)
+		if (!tab.pinned)
 		{
 			return tab;
 		}
