@@ -55,10 +55,10 @@ function updateDisplay(display)
 function DuplicateProcessor(implementation)
 {
 	this.cache = new TabCache();
-	this.implementation = implementation;
+	// this.implementation = implementation;
 	this.process = function(tab)
 	{
-		var found = this.cache.exists(tab);
+		var found = this.cache.get_tab(tab);
 		if (found)
 		{
 			implementation.execute(this.nonSelected(found, tab));
@@ -90,11 +90,11 @@ function DuplicateProcessor(implementation)
 function Counter()
 {
 	this.count = 0;
-	this.urls = "";
+	this.urls = [];
 	this.execute = function(tab)
 	{
 		this.count += 1;
-		this.urls += tab.url + '\n';
+		this.urls.push(tab.url);
 	};
 }
 
@@ -110,7 +110,7 @@ function TabCache()
 {
 	this.tabs = [];
 
-	this.exists = function(tab)
+	this.get_tab = function(tab)
 	{
 		return this.tabs[tab.url.toLowerCase()];
 	};
@@ -126,7 +126,7 @@ function Display(counter)
 	this.title = "Tab Dupectomy";
 	this.text = "";
 	if (counter){
-		this.title = counter.urls;
+		this.title = counter.urls.join('\n');
 
 		if (counter.count != 0)
 		{
